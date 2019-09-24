@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Title -->
+<title>Ana Sayfa</title>
+<% include ../partials/head %>
+</head>
+
+<body>
+<% include ../partials/header %>
+<!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/41.jpg);">
+        <div class="container h-100">
+                <% foundUser.forEach((foundUser) => { %>
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2> <%= foundUser.nameSurname %></h2>
+                    </div>
+                </div>
+                 <div class="col-8">
+                    <div class="breadcrumb-content-detail">
+                        <h3 style="color: white;"> <%= foundUser.username %></h3>
+                        <%  if( foundUser.social.instagram != ""){ %>
+                        <a href="https://www.instagram.com/<%= foundUser.social.instagram %>" style="color: white;" target="_blank"></a><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <% } %>
+                        <%  if( foundUser.social.facebook != ""){ %>
+                        <a href="https://www.facebook.com/<%= foundUser.social.facebook %>" style="color: white;" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <% } %>
+                        <%  if( foundUser.social.twitter != ""){ %>
+                        <a href="https://www.twitter.com/<%= foundUser.social.twitter %>" style="color: white;" target="_blank"></a><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        <% } %>
+                    </div>
+                </div>
+                <% foundUserRatings.forEach( (ratings)=>{ %>
+                    <div class="col-1">
+                        <div class="breadcrumb-content-detail float-right">
+                            <h3 style="color: white;"> <%= ratings.favRating %></h3>
+                            <a style="color: white;" target="_blank">Beğeni</a>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="breadcrumb-content-detail float-right">
+                            <h3 style="color: white;"> <%= ratings.visitRating %></h3>
+                            <a style="color: white;" target="_blank">Tıklanma</a>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="breadcrumb-content-detail">
+                            <h3 style="color: white;"> <%= numOfResults %></h3>
+                            <a style="color: white;" target="_blank">Post</a>
+                        </div>
+                    </div>
+            </div>
+            <% }); %> 
+            <% }); %> 
+        </div>
+    </section>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="mag-breadcrumb py-5">
+        <div class="container">
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Archive Post Area Start ##### -->
+    <div class="archive-post-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-8">
+                    <div class="archive-posts-area bg-white p-30 mb-30 box-shadow">
+
+                        <% foundUserPosts.forEach( (foundUserPost)=>{ %>
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <img class="post-thumbnail bg-img" style="height: 16em; max-height:16em;" src="../<%= foundUserPost.smImg %>">
+                            </img>
+
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                <div class="custom-flex">
+                                    <div class="post-meta left-flex">
+                                        <p><%= foundUserPost.date %></p>
+                                    </div>
+                                    <div class="thumbnail-user right-flex">
+                                        <a class="thumbnail-user-name" href="#"><%= foundUserPost.username %></a>
+                                        <img class="thumbnail-user-image" src="img/bg-img/43.jpg"/>
+                                    </div>
+                                </div>
+                                <a href="/articles/<%=foundUserPost._id%>" class="post-title"><%= foundUserPost.title %></a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a id="visitRatingView"><i class="fa fa-eye" aria-hidden="true"></i> <%= foundUserPost.visitRating %></a>
+                                    <a id="likeButtonss-<%=foundUserPost._id%>" data-show-faces="true" href="/likes/<%=foundUserPost._id%>"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><%= foundUserPost.favRating %></a>
+                                    <button class="btn-primary" id="likeButton-<%=foundUserPost._id%>" type="submit" name="<%=foundUserPost._id%>" onClick="fonk(this.name)"><%= foundUserPost.favRating %></button>
+                                </div>
+                                
+                                <p><%- foundUserPost.content %></p>
+                            </div>
+                        </div>
+
+                        <% }); %> 
+                        
+                        <% foundUser.forEach((foundUser) => { %>
+                        <!-- Pagination -->
+                                <% if (pages > 1) { %>
+                                    <ul class="pagination">
+                                        <% if (currentPage > 1) { %>
+                                            <li class="page-item"><a class="page-link" href="/<%= foundUser.username %>/sayfa=1"><i class="ti-angle-left"></i></a></li>
+                                        <% } %>
+                                        <% var i = 1;
+                                        if (currentPage > 5) {
+                                            i = +currentPage - 4;
+                                        } %>
+                                        <% if (i !== 1) { %>
+                                            <li class="page-item"><a class="page-link" href="/<%= foundUser.username %>/sayfa=<%= +currentPage -4 %>">...</a></li>
+                                        <% } %>
+                                        <% for (i; i<=pages; i++) { %>
+                                            <% if (currentPage == i) { %>
+                                                <li class="page-item active"><a class="page-link" href="/<%= foundUser.username %>/sayfa=<%= i %>"><%= i %></a></li>
+                                            <% } else { %>
+                                                <li class="page-item"><a class="page-link" href="/<%= foundUser.username %>/sayfa=<%= i %>"><%= i %></a></li>
+                                            <% } %>
+                                            <% if (i == (+currentPage + 4)) { %>
+                                                <li class="page-item"><a class="page-link" href="/<%= foundUser.username %>/sayfa=<%= +currentPage + 4 %>">...</a></li>
+                                            <% break; } %>
+                                        <% } %>
+                                        <% if (currentPage != pages) { %>
+                                            <li class="page-item"><a class="page-link" href="/<%= foundUser.username %>/sayfa=<%= pages %>"><i class="ti-angle-right"></i></a></li>
+                                        <% } %>
+                                    </ul>
+                                <% } %>
+                            <% }); %>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+                    <div class="sidebar-area bg-white mb-30 box-shadow">
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Social Followers Info -->
+                            <div class="social-followers-info">
+                                <!-- Facebook -->
+                                <a href="#" class="facebook-fans"><i class="fa fa-facebook"></i> 4,360 <span>Fans</span></a>
+                                <!-- Twitter -->
+                                <a href="#" class="twitter-followers"><i class="fa fa-twitter"></i> 3,280 <span>Followers</span></a>
+                                <!-- YouTube -->
+                                <a href="#" class="youtube-subscribers"><i class="fa fa-youtube"></i> 1250 <span>Subscribers</span></a>
+                                <!-- Google -->
+                                <a href="#" class="google-followers"><i class="fa fa-google-plus"></i> 4,230 <span>Followers</span></a>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>Categories</h5>
+                            </div>
+
+                            <!-- Catagory Widget -->
+                            <ul class="catagory-widgets">
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Life Style</span> <span>35</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Travel</span> <span>30</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Foods</span> <span>13</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Game</span> <span>06</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Sports</span> <span>28</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Football</span> <span>08</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> TV Show</span> <span>13</span></a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget">
+                            <a href="#" class="add-img"><img src="img/bg-img/add2.png" alt=""></a>
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>Hot Channels</h5>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/14.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">TV Show</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/15.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">Game Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/16.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">Sport Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/17.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">Travel Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/18.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">LifeStyle Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>Newsletter</h5>
+                            </div>
+
+                            <div class="newsletter-form">
+                                <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
+                                <form action="#" method="get">
+                                    <input type="search" name="widget-search" placeholder="Enter your email">
+                                    <button type="submit" class="btn mag-btn w-100">Subscribe</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Archive Post Area End ##### -->
+
+    <% include ../partials/footer %>
+
+    <% include ../partials/scripts %>
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Title -->
+<title>Ana Sayfa</title>
+<% include ../partials/head %>
+
+
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+
+<link href="summernote/dist/summernote-bs4.css" rel="stylesheet">
+<script src="summernote/dist/summernote-bs4.js"></script>
+<script src="summernote/dist/lang/summernote-tr-TR.js"></script>
+ <!-- jQuery-2.2.4 js -->
+</head>
+
+<body>
+<% include ../partials/header %>
+<!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/40.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2>Submit Video</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="mag-breadcrumb py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Submit Video</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Video Submit Area Start ##### -->
+    <div class="video-submit-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <!-- Video Submit Content -->
+                    <div class="video-submit-content mb-50 p-30 bg-white box-shadow">
+                        <!-- Section Title -->
+                        <div class="section-heading">
+                            <h5>Submit your video</h5>
+                        </div>
+
+                        <div class="video-info mt-30">
+                                <div class="dropdown" id="dropdown">
+                                        <!--Trigger-->
+                                        <button class="btn btn-warning dropdown-toggle" type="button" id="postTypeDropdown" data-toggle="dropdown"
+                                          aria-haspopup="true" aria-expanded="false">Yazı Türü</button>
+                                        <!--Menu-->
+                                        <div class="dropdown-menu madropdown-priry">
+                                          <a class="dropdown-item" value="1" id="articleDd" href="#">Yazı veya Deneme</a>
+                                          <a class="dropdown-item" value="2" id="poetryDd" href="#">Şiir</a>
+                                          <a class="dropdown-item" value="3" id="illustrationDd" href="#">İllüstrasyon</a>
+                                          <a class="dropdown-item" value="4" id="cartoonDd" href="#">Karikatür</a>
+                                          <a class="dropdown-item" value="5" id="shortWordsDd" href="#">Kısa Sözler</a>
+                                        </div>
+                                    </div>
+
+                            <form id="articleForm" class="visibility-true" action="/addTry" method="POST" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="title">Yazı Başlığı*</label>
+                                    <input type="text" id="title" name="title" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                        <label for="summernote">Yazınız*</label>
+                                        <textarea id="summernote" name="editordata"></textarea>
+                                    </div>
+                                <div class="form-group">
+                                    <label for="postImportantSentence">Yazınızın öne çıkarmak istediğiniz cümlesini giriniz.</label>
+                                    <input type="text" id="importantSentence" name="importantSentence" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sampleFile">Kapak Fotoğrafı</label>
+                                    <input type="file" id="sampleFile" name="sampleFile" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="nameViewRb">Yayınlanırken </label>               
+                                    <input type="radio" id="nameViewRb" name="showName" value="nameView"> 
+                                    <label for="nameViewRb">İsmim görülsün</label>  
+                                    <input type="radio" id="userViewRb" name="showName" value="userView"> 
+                                    <label for="userViewRb">Kullanıcı ismim görülsün</label>     
+                                    <input type="radio" id="hiddenViewRb" name="showName" value="hiddenView"> 
+                                    <label for="hiddenViewRb">Gizli kalsın</label>
+                                </div>
+                                <button id="submitPostArticleButton" type="submit" class="btn mag-btn mt-30"> Gönder</button>
+                            </form>
+
+                            <form id="poetryForm" class="visibility-true" encType="multipart/form-data" action="/addPoetry" method="POST">
+                                <div class="form-group">
+                                    <label for="postTitle">Şiir Başlığı*</label>
+                                    <input type="text" id="postTitle" name="postTitle" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                        <label for="summernote2">Şiiriniz*</label>
+                                        <textarea id="summernote2" name="editordata"></textarea>
+                                    </div>
+                                <div class="form-group">
+                                    <label for="postImportantSentence">Şiirinizin öne çıkarmak istediğiniz cümlesini giriniz.</label>
+                                    <input type="text" id="postImportantSentence" name="postImportantSentence" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sampleFile">Kapak Fotoğrafı</label>
+                                    <input type="file" id="sampleFile" name="sampleFile" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="nameViewRb">Yayınlanırken </label>               
+                                    <input type="radio" id="nameViewRb" name="showName" value="nameView"> 
+                                    <label for="nameViewRb">İsmim görülsün</label>  
+                                    <input type="radio" id="userViewRb" name="showName" value="userView"> 
+                                    <label for="userViewRb">Kullanıcı ismim görülsün</label>     
+                                    <input type="radio" id="hiddenViewRb" name="showName" value="hiddenView"> 
+                                    <label for="hiddenViewRb">Gizli kalsın</label>
+                                </div>
+                                <button id="submitPostPoetryButton" type="submit" class="btn mag-btn mt-30"> Gönder</button>
+                            </form>
+
+                            <form id="illustrationForm" class="visibility-true" enctype="multipart/form-data" method="POST" action="/addIllustration">
+                                    <div class="form-group">
+                                            <label for="summernote3">Görselleriniz*</label>
+                                            <textarea id="summernote3" name="editordata"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="sampleFile">Kapak Fotoğrafı</label>
+                                            <input type="file" id="sampleFile" name="sampleFile" />
+                                        </div>
+                                    <div class="form-group">
+                                        <label for="nameViewRb">Yayınlanırken </label>               
+                                        <input type="radio" id="nameViewRb" name="showName" value="nameView"> 
+                                        <label for="nameViewRb">İsmim görülsün</label>  
+                                        <input type="radio" id="userViewRb" name="showName" value="userView"> 
+                                        <label for="userViewRb">Kullanıcı ismim görülsün</label>     
+                                        <input type="radio" id="hiddenViewRb" name="showName" value="hiddenView"> 
+                                        <label for="hiddenViewRb">Gizli kalsın</label>
+                                    </div>
+                                    <button id="submitPostIllustrationButton" type="submit" class="btn mag-btn mt-30"> Gönder</button>
+                            </form>
+
+                            <form id="cartoonForm" class="visibility-true"  enctype="multipart/form-data" method="POST" action="/addCartoon">
+                                <div class="form-group">
+                                        <label for="summernote4">Görselleriniz*</label>
+                                        <textarea id="summernote4" name="editordata"></textarea>
+                                </div>
+                                <div class="form-group">
+                                        <label for="sampleFile">Kapak Fotoğrafı</label>
+                                        <input type="file" id="sampleFile" name="sampleFile" />
+                                    </div>
+                                <div class="form-group">
+                                    <label for="nameViewRb">Yayınlanırken </label>               
+                                    <input type="radio" id="nameViewRb" name="showName" value="nameView"> 
+                                    <label for="nameViewRb">İsmim görülsün</label>  
+                                    <input type="radio" id="userViewRb" name="showName" value="userView"> 
+                                    <label for="userViewRb">Kullanıcı ismim görülsün</label>     
+                                    <input type="radio" id="hiddenViewRb" name="showName" value="hiddenView"> 
+                                    <label for="hiddenViewRb">Gizli kalsın</label>
+                                </div>
+                                <button id="submitPostIllustrationButton" type="submit" class="btn mag-btn mt-30"> Gönder</button>
+                              </form>
+
+                              <form id="shortWordsForm" class="visibility-true" enctype="multipart/form-data" method="POST" action="/addShortWord">
+                                <div class="form-group">
+                                        <label for="shortWord">Kısa Sözünüz*</label>
+                                        <input type="text" id="shortWord" name="shortWord" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nameViewRb">Yayınlanırken </label>               
+                                    <input type="radio" id="nameViewRb" name="showName" value="nameView"> 
+                                    <label for="nameViewRb">İsmim görülsün</label>  
+                                    <input type="radio" id="userViewRb" name="showName" value="userView"> 
+                                    <label for="userViewRb">Kullanıcı ismim görülsün</label>     
+                                    <input type="radio" id="hiddenViewRb" name="showName" value="hiddenView"> 
+                                    <label for="hiddenViewRb">Gizli kalsın</label>
+                                </div>
+                                <button id="submitPostShortWordsButton" type="submit" class="btn mag-btn mt-30"> Gönder</button>
+                              </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Video Submit Area End ##### -->
+
+    <% include ../partials/footer %>
+    
+    <script>
+            $('#summernote').summernote({
+              lang: 'tr-TR',
+              placeholder: 'Yazınızı buraya yerleştirebilirsiniz',
+              tabsize: 2,
+              height: 500
+            });
+            $('#summernote2').summernote({
+              lang: 'tr-TR',
+              placeholder: 'Yazınızı buraya yerleştirebilirsiniz',
+              tabsize: 2,
+              height: 500
+            });
+            $('#summernote3').summernote({
+              lang: 'tr-TR',
+              placeholder: 'Yazınızı buraya yerleştirebilirsiniz',
+              tabsize: 2,
+              height: 500
+            });
+            $('#summernote4').summernote({
+              lang: 'tr-TR',
+              placeholder: 'Yazınızı buraya yerleştirebilirsiniz',
+              tabsize: 2,
+              height: 500
+            });
+          </script>
+   
+    <script src="js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="js/active.js"></script>
+</body>
+
+</html>

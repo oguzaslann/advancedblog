@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Title -->
+<title>Ana Sayfa</title>
+<% include ../partials/head %>
+</head>
+
+<body>
+<% include ../partials/header %>
+<!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/41.jpg);">
+        <div class="container h-100">
+                <% foundUser.forEach((foundUser) => { %>
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2> <%= foundUser.username %></h2>
+                    </div>
+                </div>
+                 <div class="col-12">
+                    <div class="breadcrumb-content-detail">
+                            <h3 style="color: white;"> <%= foundUser.username %></h3>
+                        <i class="fa fa-facebook-f" aria-hidden="true"></i>
+                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                        <i class="fa fa-instagram" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+            <% }); %> 
+        </div>
+    </section>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+     <!-- ##### Breadcrumb Area Start ##### -->
+     <div class="mag-breadcrumb py-5">
+            <div class="container col-3">
+                    <nav class="nav nav-pills nav-fill">
+                            <a class="nav-item nav-link" href="/yayin-profilim&1">Yayın Görünümü</a>
+                            <a class="nav-item nav-link" href="/profilim">Profil Ayarları</a>
+                            <a class="nav-item nav-link active" href="/yazilarim&1">Yazılarım</a>
+                          </nav>
+            </div>
+        </div>
+        <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Archive Post Area Start ##### -->
+    <div class="archive-post-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- ##### Archive Post Area Start ##### -->
+    <div class="archive-post-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                    <div class="archive-posts-area bg-white p-60 mb-60 box-shadow">
+
+                        <!--Table-->
+<table class="table table-hover">
+
+  <!--Table head-->
+  <thead>
+    <tr>
+      <th></th>
+      <th>Yazı Başlığı</th>
+      <th>Yazı Türü</th>
+      <th>Onaylanma</th>
+      <th></th>
+      <th></th>
+      <th></th>
+
+    </tr>
+  </thead>
+  <!--Table head-->
+
+  <!--Table body-->
+  <tbody>
+        <% foundUserPosts.forEach( (post, i=1)=>{ %>
+    <tr>
+      <th scope="row"><%= (currentPage*50 - 49) + i++ %></th>    
+      <td><a href="/articles/<%=post._id%>" class="post-title"><%= post.title %></a></td>
+      <td><%= post.type %></td>
+        <% if (post.validation.isValidation == 0) { %>
+      <td><i class="fa fa-hourglass-half"></i></td>
+        <% } %>
+            <% if (post.validation.isValidation == 1) { %>
+                <td><i class="fa fa-check"></i></td>
+                <% } %>
+              <% if (post.validation.isValidation == 2) { %>
+                <td><i class="fa fa-times-circle"></i></td>
+                  <% } %>
+        <td>
+        <div id="detail-<%= post._id%>" class="visibility-true">
+      <p>Tıklanma sayısı: <%= post.rating.visitRating %></p>
+      <p>Fav Sayısı: <%= post.rating.favRating %></p>
+      <p>Gönderilme zamanı: <%= post.applicationDate %></p>
+        </td>
+        </div>
+        <td><button type="button" id="detailOpenButton-<%= post._id%>" name="<%=post._id%>" onClick="detailOpen(this.name)" class="btn btn-outline-info">Detay</button>
+            <button type="button" id="detailCloseButton-<%= post._id%>" name="<%=post._id%>" onClick="detailClose(this.name)" class="btn btn-outline-danger visibility-true">Kapat</button></td>
+        <td><a href="/articles/<%=post._id%>" class="btn btn-outline-warning">Yazı</a></td>
+    </tr>   
+        <% }); %> 
+  </tbody>
+  <!--Table body-->
+
+</table>
+<!--Table-->
+
+<!-- Pagination -->
+<% if (pages > 1) { %>
+    <ul class="pagination">
+        <% if (currentPage > 1) { %>
+            <li class="page-item"><a class="page-link" href="/yazilarim&1"><i class="ti-angle-left"></i></a></li>
+        <% } %>
+        <% var i = 1;
+        if (currentPage > 5) {
+            i = +currentPage - 4;
+        } %>
+        <% if (i !== 1) { %>
+            <li class="page-item"><a class="page-link" href="/yazilarim&<%= +currentPage -4 %>">...</a></li>
+        <% } %>
+        <% for (i; i<=pages; i++) { %>
+            <% if (currentPage == i) { %>
+                <li class="page-item active"><a class="page-link" href="/yazilarim&<%= i %>"><%= i %></a></li>
+            <% } else { %>
+                <li class="page-item"><a class="page-link" href="/yazilarim&<%= i %>"><%= i %></a></li>
+            <% } %>
+            <% if (i == (+currentPage + 4)) { %>
+                <li class="page-item"><a class="page-link" href="/yazilarim&<%= +currentPage + 4 %>">...</a></li>
+            <% break; } %>
+        <% } %>
+        <% if (currentPage != pages) { %>
+            <li class="page-item"><a class="page-link" href="/yazilarim&<%= pages %>"><i class="ti-angle-right"></i></a></li>
+        <% } %>
+    </ul>
+<% } %>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Archive Post Area End ##### -->
+
+    <% include ../partials/footer %>
+
+    <% include ../partials/scripts %>
+</body>
+
+</html>

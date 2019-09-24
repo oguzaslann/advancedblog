@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Title -->
+<title>Ana Sayfa</title>
+<% include ../partials/head %>
+
+
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+
+<link href="summernote/dist/summernote-bs4.css" rel="stylesheet">
+<script src="summernote/dist/summernote-bs4.js"></script>
+<script src="summernote/dist/lang/summernote-tr-TR.js"></script>
+ <!-- jQuery-2.2.4 js -->
+</head>
+
+<body>
+<% include ../partials/header %>
+<!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/40.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2>Submit Video</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="mag-breadcrumb py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Submit Video</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Video Submit Area Start ##### -->
+    <div class="video-submit-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <!-- Video Submit Content -->
+                    <div class="video-submit-content mb-50 p-30 bg-white box-shadow">
+                        <!-- Section Title -->
+                        <div class="section-heading">
+                            <h5>Submit your video</h5>
+                        </div>
+
+                        <div class="video-info mt-30">
+                            <form id="articleForm" encType="multipart/form-data" action="/articles/edit-<%= foundArticle._id %>" method="POST">
+                                <div class="form-group">
+                                    <label for="postTitle">Başlık</label>
+                                    <input type="text" id="postTitle" name="postTitle" class="form-control" value="<%= foundArticle.title %>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="postImportantSentence">Öne Çıkan Cümle</label>
+                                    <input type="text" id="postImportantSentence" name="postImportantSentence" class="form-control" value="<%= foundArticle.impCent %>">
+                                </div>
+                                <button id="submitEditPostButton" type="submit" class="btn mag-btn mt-30"> Gönder</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Video Submit Area End ##### -->
+
+    <% include ../partials/footer %>
+    
+    <script>
+            $('#summernote').summernote({
+              lang: 'tr-TR',
+              tabsize: 2,
+              height: 500
+            });
+          </script>
+   
+    <script src="js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="js/active.js"></script>
+</body>
+
+</html>

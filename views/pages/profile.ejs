@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Title -->
+<title>Ana Sayfa</title>
+<% include ../partials/head %>
+</head>
+
+<body>
+<% include ../partials/header %>
+<!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/41.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2>Travel</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+   
+     <!-- ##### Breadcrumb Area Start ##### -->
+     <div class="mag-breadcrumb py-5">
+            <div class="container col-3">
+                    <nav class="nav nav-pills nav-fill">
+                            <a class="nav-item nav-link" href="/yayin-profilim&1">Yayın Görünümü</a>
+                            <a class="nav-item nav-link active" href="/profilim">Profil Ayarları</a>
+                            <a class="nav-item nav-link" href="/yazilarim&1">Yazılarım</a>
+                          </nav>
+            </div>
+        </div>
+        <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Archive Post Area Start ##### -->
+    <div class="archive-post-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-8">
+                    <div class="archive-posts-area bg-white p-30 mb-30 box-shadow">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <% foundUser.forEach((foundUser) => { %>
+                                        <div class="card-body">
+                                            <div class="card-title mb-4">
+                                                <div class="d-flex justify-content-start">
+                                                    <form id="editProfilePhotoForm" action="/editProfilePhoto" method="POST" enctype="multipart/form-data">
+                                                    <div class="image-container">
+                                                        <img src="<%= foundUser.img.userImg %>" id="imgProfile" style="width: 200px; height: 200px" class="img-thumbnail" />
+                                                        <a id="editProfilePhotoAhref" class="btn btn-outline-warning">Düzenle</a>
+                                                        <a id="editProfilePhotoAhrefCancel" class="btn btn-outline-warning" style="display: none;">İptal</a>    
+                                                    </div>
+                                                    <input type="file" id="sampleFileEditPhoto" name="sampleFile" style="display: none;"/>  
+                                                    <button id="editProfilePhotoFormButton" type="submit" class="btn btn-outline-warning" style="display: none;">Kaydet</button>
+                                                    </form>
+                                                    <div class="userData ml-3">
+                                                        <h5 class="d-block" style="font-size: 1.5rem; font-weight: bold"><%= foundUser.nameSurname %></h5>
+                                                        <h6 class="d-block"><%= foundUser.username %></h6>
+                                                        <h6 class="d-block"><%= countPost %> - Yazı</h6>
+                                                    </div>
+                                                    <div class="ml-auto">
+                                                        <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="Discard Changes" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <form id="profileEditForm" action="/editProfile" method="POST" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">Temel Bilgiler</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="connectedServices-tab" data-toggle="tab" href="#connectedServices" role="tab" aria-controls="connectedServices" aria-selected="false">Sosyal Medya Hesapları</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                                <a class="nav-link" id="changePassword-tab" href="/changePassword">Şifre Değiştir</a>
+                                                            </li>
+                                                    </ul>
+                                                    <div class="tab-content ml-1" id="myTabContent">
+                                                        <div class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basicInfo-tab">
+
+                                                            <div class="row">
+                                                                <div class="col-sm-3 col-md-2 col-5">
+                                                                    <label style="font-weight:bold;">Full Name</label>
+                                                                </div>
+                                                                <div class="col-md-8 col-6">
+                                                                   <input type="text" id="nameSurname" name="nameSurname" class="form-control inputsProfileEdit" value="<%= foundUser.nameSurname %>" style="display: none;">
+                                                                    <div class="profileShows"><%= foundUser.nameSurname %></div>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                    
+                                                            <div class="row">
+                                                                <div class="col-sm-3 col-md-2 col-5">
+                                                                    <label style="font-weight:bold;">Birth Date</label>
+                                                                </div>
+                                                                <div class="col-md-8 col-6">
+                                                                    <input type="text" id="birtDate" name="birtDate" class="form-control inputsProfileEdit" value="<%= foundUser.birthDate %>" style="display: none;">
+                                                                    <div class="profileShows"><%= foundUser.birthDate %></div>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                                                            
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-sm-3 col-md-2 col-5">
+                                                                    <label style="font-weight:bold;">Email</label>
+                                                                </div>
+                                                                <div class="col-md-8 col-6">
+                                                                    <input type="text" id="email" name="email" class="form-control inputsProfileEdit" value="<%= foundUser.email %>" style="display: none;">
+                                                                    <div class="profileShows"><%= foundUser.email %></div>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-sm-3 col-md-2 col-5">
+                                                                    <label style="font-weight:bold;">İnfo</label>
+                                                                </div>
+                                                                <div class="col-md-8 col-6">
+                                                                    <input type="text" id="info" name="info" class="form-control inputsProfileEdit" value="<%= foundUser.info %>" style="display: none;">
+                                                                    <div class="profileShows"><%= foundUser.info %></div>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-sm-3 col-md-2 col-5">
+                                                                    <label style="font-weight:bold;">Username</label>
+                                                                </div>
+                                                                <div class="col-md-8 col-6">
+                                                                     <div><%= foundUser.username %></div>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                    
+                                                        </div>
+                                                        <div class="tab-pane fade" id="connectedServices" role="tabpanel" aria-labelledby="ConnectedServices-tab">
+                                                            <div class="row">
+                                                                <div class="col-sm-3 col-md-2 col-5">
+                                                                    <label style="font-weight:bold;">Facebook</label>
+                                                                </div>
+                                                                <div class="col-md-8 col-6">
+                                                                     <input type="text" id="facebook" name="facebook" class="form-control inputsProfileEdit" value="<%= foundUser.social.facebook %>" style="display: none;">
+                                                                     <div class="profileShows">/<%= foundUser.social.facebook %></div>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-sm-3 col-md-2 col-5">
+                                                                    <label style="font-weight:bold;">Twitter</label>
+                                                                </div>
+                                                                <div class="col-md-8 col-6">
+                                                                     <input type="text" id="twitter" name="twitter" class="form-control inputsProfileEdit" value="<%= foundUser.social.twitter %>" style="display: none;">
+                                                                     <div class="profileShows">/<%= foundUser.social.twitter %></div>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-sm-3 col-md-2 col-5">
+                                                                    <label style="font-weight:bold;">İnstagram</label>
+                                                                </div>
+                                                                <div class="col-md-8 col-6">
+                                                                    <input type="text" id="instagram" name="instagram" class="form-control inputsProfileEdit" value="<%= foundUser.social.instagram %>" style="display: none;">
+                                                                    <div class="profileShows">/<%= foundUser.social.instagram %></div>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                                                        </div>
+                                                 
+                                                        <button id="submitEditProfileButton" type="submit" class="btn float-right inputsProfileEdit btn-outline-warning" style="display: none;">Kaydet</button>
+                                                        <a id="editProfile" class="btn float-right profileShows btn-outline-warning">Düzenle</a>
+                                                        <a id="editProfileCancel" class="btn float-left inputsProfileEdit btn-outline-warning" style="display: none;">İptal</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>    
+                    
+                                        </div>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                </div>
+                        
+
+                <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+                    <div class="sidebar-area bg-white mb-30 box-shadow">
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Social Followers Info -->
+                            <div class="social-followers-info">
+                                <!-- Facebook -->
+                                <a href="#" class="facebook-fans"><i class="fa fa-facebook"></i> 4,360 <span>Fans</span></a>
+                                <!-- Twitter -->
+                                <a href="#" class="twitter-followers"><i class="fa fa-twitter"></i> 3,280 <span>Followers</span></a>
+                                <!-- YouTube -->
+                                <a href="#" class="youtube-subscribers"><i class="fa fa-youtube"></i> 1250 <span>Subscribers</span></a>
+                                <!-- Google -->
+                                <a href="#" class="google-followers"><i class="fa fa-google-plus"></i> 4,230 <span>Followers</span></a>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>Categories</h5>
+                            </div>
+
+                            <!-- Catagory Widget -->
+                            <ul class="catagory-widgets">
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Life Style</span> <span>35</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Travel</span> <span>30</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Foods</span> <span>13</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Game</span> <span>06</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Sports</span> <span>28</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Football</span> <span>08</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> TV Show</span> <span>13</span></a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget">
+                            <a href="#" class="add-img"><img src="img/bg-img/add2.png" alt=""></a>
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>Hot Channels</h5>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/14.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">TV Show</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/15.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">Game Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/16.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">Sport Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/17.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">Travel Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/18.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">LifeStyle Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>Newsletter</h5>
+                            </div>
+
+                            <div class="newsletter-form">
+                                <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
+                                <form action="#" method="get">
+                                    <input type="search" name="widget-search" placeholder="Enter your email">
+                                    <button type="submit" class="btn mag-btn w-100">Subscribe</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Archive Post Area End ##### -->
+
+    <% include ../partials/footer %>
+
+    <% include ../partials/scripts %>
+</body>
+
+</html>

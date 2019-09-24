@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Title -->
+<title>Ana Sayfa</title>
+<% include ../partials/head %>
+</head>
+
+<body>
+<% include ../partials/header %>
+<!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/41.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2>Travel</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="mag-breadcrumb py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                        <div class="dropdown" id="dropdown">
+                                <!--Trigger-->
+                                <button class="btn btn-primary dropdown-toggle float-right" type="button" id="postTypeDropdown" data-toggle="dropdown"
+                                  aria-haspopup="true" aria-expanded="false">Sıralama</button>
+                                <!--Menu-->
+                                <div class="dropdown-menu madropdown-priry">
+                                  <a class="dropdown-item" value="1" id="lastSortingDd" href="/articles/sayfa=1&ls">Son Eklenene Göre</a>
+                                  <a class="dropdown-item" value="2" id="popularSortingDd" href="/articles/sayfa=1&ps">Popülerliğe Göre</a>
+                                  <a class="dropdown-item" value="3" id="nameSortingDd" href="/articles/sayfa=1&ns">A'dan Z'ye</a>
+                                  <a class="dropdown-item" value="4" id="reserveNameSortingDd" href="/articles/sayfa=1&rns">Z'den A'ya</a>
+                                </div>
+                            </div>
+                </div>
+                <div class="col-4">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Archive Post Area Start ##### -->
+    <div class="archive-post-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-8">
+                    <div class="archive-posts-area bg-white p-30 mb-30 box-shadow">
+                        <% foundArticles.forEach( (article)=>{ %>
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <img class="post-thumbnail bg-img" style="height: 16em; max-height:16em;" src="../<%= article.smImg %>">
+                            </img>
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                <div class="custom-flex">
+                                    <div class="post-meta left-flex">
+                                        <p><%= article.validation.date %></p>
+                                    </div>
+                                    <div class="thumbnail-user right-flex">
+                                         <%  if(article.showName == "userView") { %> 
+                                        <a class="thumbnail-user-name" href="/<%= article.user.username %>/sayfa=1"><%= article.user.username %></a>
+                                        <img class="thumbnail-user-image" src="img/bg-img/43.jpg"/>
+                                         <% } %> 
+                                            <%  if(article.showName == "nameView") { %> 
+                                                <a class="thumbnail-user-name" href="/<%= article.user.username %>/sayfa=1">İSİM</a>
+                                                <img class="thumbnail-user-image" src="img/bg-img/43.jpg"/>
+                                                <% } %>
+                                             <%  if(article.showName == "hiddenView") { %> 
+                                                <p>Gizli</p>
+                                                 <% } %> 
+                                    </div>
+                                </div>
+                                <a href="/articles/<%=article._id%>" class="post-title"><%= article.title %></a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                        <a id="visitRatingView"><i class="fa fa-eye" aria-hidden="true"></i><%= article.rating.visitRating %></a>
+                                        <a id="likeButton-<%=article._id%>" class="likeButtonPost" name="<%=article._id%>" onClick="likesCheck(this.name)"><i class="fa fa-thumbs-o-up"></i><%= article.rating.favRating %></a>
+                                        <a id="shareButton" class="shareButton" name="<%=article._id%>"><i class="fa fa-share-alt"></i>
+                                            <div id="showShare" class="showShare">
+                                                <a class="button" data-sharer="facebook" data-hashtag="zivanadergi" data-url="http://zivanadergi.com/<%=article._id%>"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                                <a class="button" data-sharer="twitter"  data-title="<%=article.title%>" data-hashtags="zivanadergi, zıvana" data-url="http://zivanadergi.com/<%=article._id%>"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                                <a class="button" data-sharer="linkedin" data-url="http://zivanadergi.com/<%=article._id%>"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                                <a class="button" data-sharer="whatsapp" data-title="<%=article.title%>" data-url="http://zivanadergi.com/<%=article._id%>" data-web="http://zivanadergi.com/<%=article._id%>"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                                <a class="button" data-sharer="tumblr" data-url="http://zivanadergi.com/<%=article._id%>"><i class="fa fa-tumblr" aria-hidden="true"></i></a>
+                                            </div>
+                                        </a>
+                                </div>
+                                <% if(article.impCent == null){ %>
+                                    <p>...</p>
+                                    <% }else{ %>
+                                    <p><%= article.impCent.substring(0, 10) %>...</p>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <iframe style="display:none" name="<%=article._id%>" onload="buttonCookies(this.name)" src="http://www.w3schools.com"></iframe>
+                        <%   }); %> 
+                        
+                        <!-- Pagination -->
+                                <% if (pages > 1) { %>
+                                    <ul class="pagination">
+                                        <% if (currentPage > 1) { %>
+                                            <li class="page-item"><a class="page-link" href="/articles/sayfa=1&<%= reqSorting %>"><i class="ti-angle-left"></i></a></li>
+                                        <% } %>
+                                        <% var i = 1;
+                                        if (currentPage > 5) {
+                                            i = +currentPage - 4;
+                                        } %>
+                                        <% if (i !== 1) { %>
+                                            <li class="page-item"><a class="page-link" href="/articles/sayfa=<%= +currentPage -4 %>&<%= reqSorting %>">...</a></li>
+                                        <% } %>
+                                        <% for (i; i<=pages; i++) { %>
+                                            <% if (currentPage == i) { %>
+                                                <li class="page-item active"><a class="page-link" href="/articles/sayfa=<%= i %>&<%= reqSorting %>"><%= i %></a></li>
+                                            <% } else { %>
+                                                <li class="page-item"><a class="page-link" href="/articles/sayfa=<%= i %>&<%= reqSorting %>"><%= i %></a></li>
+                                            <% } %>
+                                            <% if (i == (+currentPage + 4)) { %>
+                                                <li class="page-item"><a class="page-link" href="/articles/sayfa=<%= +currentPage + 4 %>&<%= reqSorting %>">...</a></li>
+                                            <% break; } %>
+                                        <% } %>
+                                        <% if (currentPage != pages) { %>
+                                            <li class="page-item"><a class="page-link" href="/articles/sayfa=<%= pages %>&<%= reqSorting %>"><i class="ti-angle-right"></i></a></li>
+                                        <% } %>
+                                    </ul>
+                                <% } %>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+                    <div class="sidebar-area bg-white mb-30 box-shadow">
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Social Followers Info -->
+                            <div class="social-followers-info">
+                                <!-- Facebook -->
+                                <a href="#" class="facebook-followers"><i class="fa fa-facebook"></i> 5,280 <span>Followers</span></a>
+                                <!-- Twitter -->
+                                <a href="#" class="twitter-followers"><i class="fa fa-twitter"></i> 3,280 <span>Followers</span></a>
+                                <!-- YouTube -->
+                                <a href="#" class="youtube-subscribers"><i class="fa fa-youtube"></i> 1250 <span>Subscribers</span></a>
+                                <!-- Google -->
+                                <a href="#" class="google-followers"><i class="fa fa-google-plus"></i> 4,230 <span>Followers</span></a>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>Categories</h5>
+                            </div>
+
+                            <!-- Catagory Widget -->
+                            <ul class="catagory-widgets">
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Life Style</span> <span>35</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Travel</span> <span>30</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Foods</span> <span>13</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Game</span> <span>06</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Sports</span> <span>28</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Football</span> <span>08</span></a></li>
+                                <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> TV Show</span> <span>13</span></a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget">
+                            <a href="#" class="add-img"><img src="img/bg-img/add2.png" alt=""></a>
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>Hot Channels</h5>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/14.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">TV Show</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/15.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">Game Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/16.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">Sport Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/17.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">Travel Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                            <!-- Single YouTube Channel -->
+                            <div class="single-youtube-channel d-flex">
+                                <div class="youtube-channel-thumbnail">
+                                    <img src="img/bg-img/18.jpg" alt="">
+                                </div>
+                                <div class="youtube-channel-content">
+                                    <a href="single-post.html" class="channel-title">LifeStyle Channel</a>
+                                    <a href="#" class="btn subscribe-btn"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Subscribe</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Sidebar Widget -->
+                        <div class="single-sidebar-widget p-30">
+                            <!-- Section Title -->
+                            <div class="section-heading">
+                                <h5>Newsletter</h5>
+                            </div>
+
+                            <div class="newsletter-form">
+                                <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
+                                <form action="#" method="get">
+                                    <input type="search" name="widget-search" placeholder="Enter your email">
+                                    <button type="submit" class="btn mag-btn w-100">Subscribe</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Archive Post Area End ##### -->
+
+    <% include ../partials/footer %>
+
+    <% include ../partials/scripts %>
+</body>
+
+</html>
