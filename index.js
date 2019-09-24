@@ -78,7 +78,7 @@ app.use(indexRoutes);
 app.use(adminRoutes);
 app.use(clientRoutes);
 
-const server = app.listen(3000, (err)=>{
+const server = app.listen(8080, (err)=>{
     if(err){
         console.log(err);
     }
